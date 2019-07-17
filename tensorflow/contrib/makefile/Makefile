@@ -186,7 +186,7 @@ ifneq ($(TARGET),ANDROID)
 endif
 
 CXXFLAGS := --std=c++11 -DIS_SLIM_BUILD -fno-exceptions -DNDEBUG $(OPTFLAGS)
-LDFLAGS :=  --L/usr/local/lib
+LDFLAGS :=  -L/usr/local/lib
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.Td
 
 INCLUDES := \
