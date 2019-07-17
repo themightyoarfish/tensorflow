@@ -58,6 +58,6 @@ echo "Optimization flags: $OPTFLAGS"
 
 # Build TensorFlow.
 make -j"${JOB_COUNT}" -f tensorflow/contrib/makefile/Makefile \
-  OPTFLAGS=$OPTFLAGS\
+  OPTFLAGS="$OPTFLAGS"\
   HOST_CXXFLAGS="--std=c++11 -march=native" \
   MAKEFILE_DIR=$SCRIPT_DIR
