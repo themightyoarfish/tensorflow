@@ -828,14 +828,18 @@ tensorflow/core/util/version_info.cc: .phony_version_info
 
 # Gathers together all the objects we've compiled into a single '.a' archive.
 $(LIB_PATH): $(LIB_OBJS)
+	@echo "CREATING $(LIB_PATH)"
 	@mkdir -p $(dir $@)
 	$(AR) $(ARFLAGS) $(LIB_PATH) $(LIB_OBJS)
+	@echo "FINISHED CREATING $(LIB_PATH)"
 
 $(BENCHMARK_NAME): $(BENCHMARK_OBJS) $(LIB_PATH) $(CUDA_LIB_DEPS)
+	@echo "CREATING $(BENCHMARK_NAME)"
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) \
 	-o $(BENCHMARK_NAME) $(BENCHMARK_OBJS) \
 	$(LIBFLAGS) $(TEGRA_LIBS) $(LIB_PATH) $(LDFLAGS) $(LIBS) $(CUDA_LIBS)
+	@echo "FINISHED CREATING $(BENCHMARK_NAME)"
 
 # NVCC compilation rules for Tegra
 ifeq ($(BUILD_FOR_TEGRA),1)
