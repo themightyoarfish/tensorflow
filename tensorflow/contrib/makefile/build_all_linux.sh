@@ -34,7 +34,7 @@ fi
 
 if [ -n "$DOWNLOAD_DEPENDENCIES" ]; then
     # Pull down the required versions of the frameworks we need.
-    tensorflow/contrib/makefile/download_dependencies.sh
+    USE_SYSTEM_PROTOBUF="$USE_SYSTEM_PROTOBUF" tensorflow/contrib/makefile/download_dependencies.sh
 fi
 
 # Compile nsync.
@@ -49,7 +49,6 @@ if [ -z "$USE_SYSTEM_PROTOBUF" ]; then
     tensorflow/contrib/makefile/compile_linux_protobuf.sh
 else
     echo "Using system protobuf"
-
 fi
 
 if [ -z "$OPTFLAGS" ]; then
