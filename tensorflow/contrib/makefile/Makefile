@@ -186,8 +186,7 @@ ifneq ($(TARGET),ANDROID)
 endif
 
 CXXFLAGS := --std=c++11 -DIS_SLIM_BUILD -fno-exceptions -DNDEBUG $(OPTFLAGS)
-LDFLAGS := \
--L/usr/local/lib
+LDFLAGS :=  --L/usr/local/lib
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.Td
 
 INCLUDES := \
@@ -255,7 +254,7 @@ ifeq ($(HAS_GEN_HOST_PROTOC),true)
 endif
 	CXXFLAGS += -fPIC
 	LIBFLAGS += -Wl,--allow-multiple-definition -Wl,--whole-archive
-	LDFLAGS := -Wl,--no-whole-archive
+	LDFLAGS += -Wl,--no-whole-archive
 endif
 # If we're on Linux, also link in the dl library.
 ifeq ($(TARGET),LINUX)
@@ -264,7 +263,7 @@ endif
 # If we're cross-compiling for the Raspberry Pi, use the right gcc.
 ifeq ($(TARGET),PI)
 	CXXFLAGS += $(ANDROID_TYPES) -DRASPBERRY_PI
-	LDFLAGS := -Wl,--no-whole-archive
+	LDFLAGS += -Wl,--no-whole-archive
 	LIBS += -ldl -lpthread
 	LIBFLAGS += -Wl,--allow-multiple-definition -Wl,--whole-archive
 endif
