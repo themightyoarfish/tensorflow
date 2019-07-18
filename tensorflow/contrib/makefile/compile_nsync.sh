@@ -100,8 +100,6 @@ esac
 # For ios, the library names for the CPU types accumulate in $platform_libs
 platform_libs=
 
-echo "Custom CXXFLAGS: $NSYNC_CPPFLAGS"
-
 # Compile nsync.
 for arch in $archs; do
         nsync_platform_dir="$nsync_builds_dir/$arch.$target_platform.c++11"
