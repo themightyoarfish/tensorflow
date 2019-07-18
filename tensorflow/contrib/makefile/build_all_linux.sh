@@ -25,14 +25,14 @@ cd ${SCRIPT_DIR}/../../../
 source "${SCRIPT_DIR}/build_helper.subr"
 JOB_COUNT="${JOB_COUNT:-$(get_job_count)}"
 
-if [ -n "$SHOULD_CLEAN" ]; then
+if [ "$SHOULD_CLEAN" == "ON" ]; then
     echo "Cleaning old files."
     # Remove any old files first.
     make -f tensorflow/contrib/makefile/Makefile clean
     rm -rf tensorflow/contrib/makefile/downloads
 fi
 
-if [ -n "$DOWNLOAD_DEPENDENCIES" ]; then
+if [ "$DOWNLOAD_DEPENDENCIES" == "ON" ]; then
     # Pull down the required versions of the frameworks we need.
     USE_SYSTEM_PROTOBUF="$USE_SYSTEM_PROTOBUF" tensorflow/contrib/makefile/download_dependencies.sh
 fi
@@ -43,7 +43,7 @@ HOST_NSYNC_LIB=`tensorflow/contrib/makefile/compile_nsync.sh`
 TARGET_NSYNC_LIB="$HOST_NSYNC_LIB"
 export HOST_NSYNC_LIB TARGET_NSYNC_LIB
 
-if [ -z "$USE_SYSTEM_PROTOBUF" ]; then
+if [ "$USE_SYSTEM_PROTOBUF" != "ON" ]; then
     echo "Using downloaded protobuf"
     # Compile protobuf.
     tensorflow/contrib/makefile/compile_linux_protobuf.sh
