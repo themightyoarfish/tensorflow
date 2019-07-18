@@ -39,6 +39,12 @@ fi
 
 # Compile nsync.
 # Don't use  export var=`something` syntax; it swallows the exit status.
+if [ "$BUILD_SHARED" == "ON" ]; then
+    export NSYNC_CPPFLAGS=-fPIC
+else
+    BUILD_SHARED=OFF
+fi
+
 HOST_NSYNC_LIB=`tensorflow/contrib/makefile/compile_nsync.sh`
 TARGET_NSYNC_LIB="$HOST_NSYNC_LIB"
 export HOST_NSYNC_LIB TARGET_NSYNC_LIB
@@ -55,9 +61,6 @@ if [ -z "$OPTFLAGS" ]; then
     OPTFLAGS="-O3 -march=native"
 fi
 
-if [ -z "$BUILD_SHARED" ]; then
-    BUILD_SHARED=OFF
-fi
 
 echo "Optimization flags: $OPTFLAGS"
 

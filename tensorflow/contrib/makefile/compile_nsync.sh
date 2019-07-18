@@ -100,6 +100,8 @@ esac
 # For ios, the library names for the CPU types accumulate in $platform_libs
 platform_libs=
 
+echo "Custom CXXFLAGS: $NSYNC_CPPFLAGS"
+
 # Compile nsync.
 for arch in $archs; do
         nsync_platform_dir="$nsync_builds_dir/$arch.$target_platform.c++11"
@@ -108,7 +110,7 @@ for arch in $archs; do
         case "$target_platform" in
         linux)  makefile='
                         CC=${CC_PREFIX} g++
-                        PLATFORM_CPPFLAGS=-DNSYNC_USE_CPP11_TIMEPOINT -DNSYNC_ATOMIC_CPP11 \
+                        PLATFORM_CPPFLAGS=$(NSYNC_CPPFLAGS) -DNSYNC_USE_CPP11_TIMEPOINT -DNSYNC_ATOMIC_CPP11 \
                                           -I../../platform/c++11.futex \
                                           -I../../platform/c++11 -I../../platform/gcc \
                                           -I../../platform/posix -pthread
@@ -141,7 +143,7 @@ for arch in $archs; do
                 esac
                 makefile='
                         CC=${CC_PREFIX} clang++
-                        PLATFORM_CPPFLAGS=-DNSYNC_USE_CPP11_TIMEPOINT -DNSYNC_ATOMIC_CPP11 \
+                        PLATFORM_CPPFLAGS=$(NSYNC_CPPFLAGS) -DNSYNC_USE_CPP11_TIMEPOINT -DNSYNC_ATOMIC_CPP11 \
                                           -I../../platform/c++11 -I../../platform/gcc_no_tls \
                                           -I../../platform/macos -I../../platform/posix -pthread
                         PLATFORM_CFLAGS=-arch '"$arch"' -fno-exceptions -stdlib=libc++ \
@@ -165,7 +167,7 @@ for arch in $archs; do
 
         macos)  makefile='
                         CC=${CC_PREFIX} clang++
-                        PLATFORM_CPPFLAGS=-DNSYNC_USE_CPP11_TIMEPOINT -DNSYNC_ATOMIC_CPP11 \
+                        PLATFORM_CPPFLAGS=$(NSYNC_CPPFLAGS) -DNSYNC_USE_CPP11_TIMEPOINT -DNSYNC_ATOMIC_CPP11 \
                                           -I../../platform/c++11 -I../../platform/gcc \
                                           -I../../platform/macos -I../../platform/posix -pthread
                         PLATFORM_CFLAGS=-x c++ -std=c++11 -Werror -Wall -Wextra -pedantic
