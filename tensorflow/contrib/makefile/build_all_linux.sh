@@ -55,10 +55,15 @@ if [ -z "$OPTFLAGS" ]; then
     OPTFLAGS="-O3 -march=native"
 fi
 
+if [ -z "$BUILD_SHARED" ]; then
+    BUILD_SHARED=OFF
+fi
+
 echo "Optimization flags: $OPTFLAGS"
 
 # Build TensorFlow.
 make -j"${JOB_COUNT}" -f tensorflow/contrib/makefile/Makefile \
   OPTFLAGS="$OPTFLAGS" \
   HOST_CXXFLAGS="--std=c++11 -march=native" \
-  MAKEFILE_DIR=$SCRIPT_DIR
+  MAKEFILE_DIR=$SCRIPT_DIR \
+  BUILD_SHARED=$BUILD_SHARED
