@@ -34,7 +34,7 @@ fi
 
 if [ -n "$DOWNLOAD_DEPENDENCIES" ]; then
     # Pull down the required versions of the frameworks we need.
-    tensorflow/contrib/makefile/download_dependencies.sh
+    USE_SYSTEM_PROTOBUF="$USE_SYSTEM_PROTOBUF" tensorflow/contrib/makefile/download_dependencies.sh
 fi
 
 # Compile nsync.
