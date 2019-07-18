@@ -49,7 +49,6 @@ if [ -z "$USE_SYSTEM_PROTOBUF" ]; then
     tensorflow/contrib/makefile/compile_linux_protobuf.sh
 else
     echo "Using system protobuf"
-
 fi
 
 if [ -z "$OPTFLAGS" ]; then

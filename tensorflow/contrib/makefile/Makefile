@@ -623,7 +623,7 @@ endif
 
 # This library is the main target for this makefile. It will contain a minimal
 # runtime that can be linked in to other programs.
-LIB_NAME := libtensorflow-core.a
+LIB_NAME := libtensorflow-core.so
 LIB_PATH := $(LIBDIR)$(LIB_NAME)
 
 # A small example program that shows how to link against the library.
@@ -826,11 +826,13 @@ all: $(LIB_PATH) $(BENCHMARK_NAME)
 tensorflow/core/util/version_info.cc: .phony_version_info
 	tensorflow/tools/git/gen_git_source.sh $@
 
+
 # Gathers together all the objects we've compiled into a single '.a' archive.
 $(LIB_PATH): $(LIB_OBJS)
 	@echo "CREATING $(LIB_PATH)"
 	@mkdir -p $(dir $@)
-	$(AR) $(ARFLAGS) $(LIB_PATH) $(LIB_OBJS)
+	# $(AR) $(ARFLAGS) $(LIB_PATH) $(LIB_OBJS)
+	 $(CXX) $(SOFLAGS) $(LIB_OBJS) $(LIBFLAGS) $(LDFLAGS) $(LIBS) -o $(LIB_PATH)
 	@echo "FINISHED CREATING $(LIB_PATH)"
 
 $(BENCHMARK_NAME): $(BENCHMARK_OBJS) $(LIB_PATH) $(CUDA_LIB_DEPS)
@@ -912,6 +914,7 @@ $(HOST_OBJDIR)%.pb.o: $(HOST_GENDIR)%.pb.cc
 # we compile the C++.
 $(PROTO_TEXT_OBJS) : $(PROTO_TEXT_PB_H_FILES)
 
+SOFLAGS := -shared
 # Ensures we link CoreFoundation as it is used for time library when building
 # for Mac and iOS
 ifeq ($(TARGET),OSX)
